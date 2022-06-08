@@ -1,10 +1,45 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'europe-west3-docker.pkg.dev/kubernetes-352517/my-docker-repo-samy/httpd-image', '.' ]
+
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - > 
+      gcloud artifacts repositories
+      create my-docker-repo
+      --repository-format=docker
+      --location=us-central1
+      --description="Docker repository"
 
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'europe-west3-docker.pkg.dev/kubernetes-352517/my-docker-repo-samy/httpd-image']
+    args: [ 'build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/httpd-image', '.' ]
+
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/httpd-image']
+
+
+
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - > 
+      gcloud auth configure-docker us-central1-docker.pkg.dev
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - > 
+      gcloud deploy app 
+      --file=clouddeploy.yaml
+      --region us-central1
+      --project=PROJECT_ID
+
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
@@ -15,5 +50,5 @@ steps:
       --project=$PROJECT_ID
       --delivery-pipeline=my-demo-app
       --region=us-central1
-      --images=my-app-image=europe-west3-docker.pkg.dev/$PROJECT_ID/my-docker-repo-samy/httpd-image 
+      --images=my-app-image=us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/httpd-image
       --source=./
