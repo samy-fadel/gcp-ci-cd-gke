@@ -32,9 +32,13 @@ steps:
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
-    args: ['gcloud deploy apply --file=clouddeploy.yaml --region us-central1 --project=PROJECT_ID', '-c']
-  
-      
+    args:
+    - '-c'
+    - > 
+      gcloud deploy apply
+      --file=clouddeploy.yaml
+      --region us-central1
+      --project=$PROJECT_ID
 
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
