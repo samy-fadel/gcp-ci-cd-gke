@@ -1,0 +1,19 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+ name: my-demo-app-1
+description: main application pipeline
+serialPipeline:
+ stages:
+ - targetId: qsprod
+   profiles: []
+---
+
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+ name: qsprod
+description: production cluster
+gke:
+ cluster: projects/kubernetes-352517/locations/europe-west3/clusters/cluster-samy

@@ -1,0 +1,19 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'europe-west3-docker.pkg.dev/kubernetes-352517/my-docker-repo-samy/httpd-image', '.' ]
+
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west3-docker.pkg.dev/kubernetes-352517/my-docker-repo-samy/httpd-image']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - > 
+      gcloud deploy releases create release-$BUILD_ID
+      --project=$PROJECT_ID
+      --delivery-pipeline=my-demo-app
+      --region=us-central1
+      --images=my-app-image=europe-west3-docker.pkg.dev/$PROJECT_ID/my-docker-repo-samy/httpd-image 
+      --source=./
