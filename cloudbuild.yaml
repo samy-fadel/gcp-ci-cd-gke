@@ -12,15 +12,13 @@ steps:
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/httpd-image']
 
 
-# Step 2
-# Publish the release
+
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     args:
     - '-c'
     - > 
       gcloud deploy releases create release-$BUILD_ID
-      --project=$PROJECT_ID
       --delivery-pipeline=my-demo-app
       --region=us-central1
       --images=my-app-image=us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/httpd-image
