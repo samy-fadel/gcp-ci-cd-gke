@@ -20,7 +20,6 @@ steps:
     - '-c'
     - > 
       gcloud deploy releases create release-$BUILD_ID
-      --project=webapp-352713
       --delivery-pipeline=my-demo-app
       --region=us-central1
       --images=my-app-image=us-central1-docker.pkg.dev/webapp-352713/my-docker-repo/httpd-image
