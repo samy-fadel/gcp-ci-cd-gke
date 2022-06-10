@@ -4,12 +4,12 @@ steps:
 #docker build the image from httpd public dockerhub Apache image
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'us-central1-docker.pkg.dev/webapp-352713/my-docker-repo/httpd-image', '.' ]
+    args: [ 'build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/httpd-image', '.' ]
 
 # Step 1
 #push the previously built image to ythe docker repo created in Step 0
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/webapp-352713/my-docker-repo/httpd-image']
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/httpd-image']
 
 
 # Step 2
@@ -22,5 +22,5 @@ steps:
       gcloud deploy releases create release-$BUILD_ID
       --delivery-pipeline=my-demo-app
       --region=us-central1
-      --images=my-app-image=us-central1-docker.pkg.dev/webapp-352713/my-docker-repo/httpd-image
+      --images=my-app-image=us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/httpd-image
       --source=./
