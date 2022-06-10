@@ -16,4 +16,4 @@ metadata:
  name: qsprod
 description: production cluster
 gke:
- cluster: projects/webapp-352713/locations/us-central1/clusters/quickstart-cluster-qsdev
+ cluster: projects/webapp-352713/locations/us-central1/clusters/cluster-1
