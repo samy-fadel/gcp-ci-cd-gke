@@ -5,7 +5,7 @@ metadata:
 description: main application pipeline
 serialPipeline:
  stages:
- - targetId: qsprod
+ - targetId: atson-corp-gke
    profiles: []
 ---
 
@@ -13,7 +13,7 @@ serialPipeline:
 apiVersion: deploy.cloud.google.com/v1
 kind: Target
 metadata:
- name: qsprod
+ name: atson-corp-gke
 description: production cluster
 gke:
- cluster: projects/gkemedium/locations/us-central1/clusters/cluster-1
+ cluster: projects/gke-demo-398306/locations/us-central1/clusters/atson-corp-cluster
